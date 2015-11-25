@@ -1,0 +1,35 @@
+<div class="col-md-4">
+  <p>
+    <strong>Name:</strong>
+    <%= @guild.name %>
+  </p>
+
+  <p>
+    <strong>Realm:</strong>
+    <%= @guild.realm %>
+  </p>
+
+  <% @guild.characters.each do |char| %>
+    <li><%= link_to char.name, char %></li>
+  <% end %>
+
+  <%= link_to 'Edit', edit_guild_path(@guild) %> |
+  <%= link_to 'Back', guilds_path %>
+</div>
+<div class="col-md-8">
+  <%= form_for :get_rating, url: get_rating_guild_path(@guild) do |f| %>
+    <%= f.submit 'Get rating' %>
+  <% end %>
+  <table class="table">
+    <% @guild.rating.sort_by { |k| k.values }.reverse.each do |key| %>
+      <tr>
+        <td><%= key.keys.first %></td>
+        <td>
+          <% key.values.first.to_i.times do %>
+            |
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
